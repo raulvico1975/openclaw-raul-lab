@@ -2,7 +2,7 @@
 
 **Laboratori personal d'OpenClaw**: configuració, skills, workflows, documentació i experiments.
 
-## 🇯🇵 Què és això?
+## Què és això?
 
 Aquest repositori és el meu **espai personal de treball amb [OpenClaw](https://openclaw.ai/)**, un framework d'agents autònoms per muntar AI assistants auto-hostejats, multi-canal i extensibles.
 
