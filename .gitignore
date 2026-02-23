@@ -1,0 +1,36 @@
+# macOS / editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.pub
+*service-account*.json
+firebase-adminsdk*.json
+
+# Databases and local artifacts
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.tgz
+*.zip
+
+# Runtime/cache
+node_modules/
+.npm/
+.cache/
+dist/
+build/

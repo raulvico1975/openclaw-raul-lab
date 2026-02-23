@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Scan only staged changes for common secret patterns.
+STAGED_DIFF="$(git diff --cached -- . ':(exclude).git' || true)"
+
+if [[ -z "$STAGED_DIFF" ]]; then
+  exit 0
+fi
+
+PATTERN='(AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z\-_]{35}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{82}|xox[baprs]-[A-Za-z0-9-]+|sk_live_[0-9a-zA-Z]{24,}|-----BEGIN (RSA|EC|DSA|OPENSSH|PRIVATE) KEY-----|mongodb(\+srv)?:\/\/[A-Za-z0-9._%+-]+:[^@[:space:]]+@)'
+
+if printf '%s\n' "$STAGED_DIFF" | rg -n --pcre2 "$PATTERN" >/dev/null; then
+  echo "ERROR: Possible secret detectat als canvis staged."
+  echo "Revisa el diff i elimina credencials abans de fer commit."
+  exit 1
+fi
+
+exit 0

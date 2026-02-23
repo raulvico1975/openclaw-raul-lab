@@ -77,7 +77,15 @@ Comença per:
 - [`docs/use-cases.md`](docs/use-cases.md) per exemples d'ús reals
 - [`docs/patterns.md`](docs/patterns.md) per patrons de prompts i bones pràctiques
 
-### 3. Adaptar-ho al teu entorn
+### 3. Activar protecció anti-secrets
+
+```bash
+./scripts/install-precommit.sh
+```
+
+També tens una checklist ràpida a [`SECURITY.md`](SECURITY.md).
+
+### 4. Adaptar-ho al teu entorn
 
 Aquest repo és **altament personal**: les configuracions, skills i workflows estan pensats per al meu context (ONG, cooperació internacional, administració).
 
