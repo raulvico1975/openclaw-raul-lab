@@ -1,21 +1,35 @@
 # Skills
 
-Skills personalitzats per al meu entorn OpenClaw.
+Estat actual (2026-02-24): no hi ha skills implementats en aquest repo.
 
-## Estructura
+## Objectiu
 
-- `ong-admin/` - Eines per administració d'ONG
-- `project-mgmt/` - Gestió de projectes de cooperació
-- `aeat-tools/` - Eines per fiscalitat espanyola (AEAT)
+Aquest directori esta reservat per skills propis quan es decideixi productitzar-los.
 
-## Com crear un skill nou
+## Convencio minima quan s'afegeixi un skill
 
-1. Crear carpeta dins de `skills/`
-2. Inicialitzar amb `npm init -y`
-3. Seguir l'estructura recomanada per OpenClaw
-4. Afegir-lo a `openclaw.json`
+- Carpeta per skill: `skills/<nom-skill>/`
+- Fitxer obligatori: `skills/<nom-skill>/SKILL.md`
+- Scope clar: que fa, que no fa, eines permeses
+- Exemple minim executable o procediment de prova
 
-## Recursos
+## Plantilla curta per `SKILL.md`
 
-- [OpenClaw Skills Docs](https://docs.openclaw.ai/skills)
-- [ClawHub Marketplace](https://clawhub.io/)
+```markdown
+# <nom-skill>
+
+## Purpose
+Descripcio curta del problema que resol.
+
+## Inputs
+Que rep.
+
+## Outputs
+Que retorna.
+
+## Workflow
+Passos minims.
+
+## Guardrails
+Llistat de limits i riscos.
+```

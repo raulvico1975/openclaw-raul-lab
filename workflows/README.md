@@ -1,15 +1,26 @@
 # Workflows
 
-Workflows i automatitzacions per OpenClaw.
+Estat actual (2026-02-24): directori reservat, sense workflows implementats.
 
-## Workflows disponibles
+## Quan afegir un workflow
 
-_Per afegir..._
+Afegeix un workflow nomes si:
+- hi ha objectiu operatiu clar
+- hi ha trigger definit
+- hi ha criteri de validacio del resultat
 
-## Com afegir un workflow
+## Convencio recomanada
 
-1. Documentar el cas d'ús
-2. Definir els passos
-3. Crear el fitxer de configuració o script
-4. Provar-lo
-5. Documentar-lo aquí
+- Un fitxer per workflow: `workflows/<nom>.md`
+- Incloure sempre:
+  - context
+  - trigger
+  - passos
+  - sortida esperada
+  - fallbacks
+
+## Checklist minima
+
+1. Definir una metrica d'exit.
+2. Provar el flux almenys un cop de punta a punta.
+3. Documentar limits i riscos.

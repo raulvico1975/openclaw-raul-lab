@@ -1,190 +1,69 @@
-# Setup Guide
+# Setup Guide - openclaw-raul-lab
 
-## Guia d'instal·lació i configuració del meu entorn OpenClaw
+Data: 2026-02-24
 
-_Aquest document descriu com tinc muntat el meu entorn OpenClaw, per poder replicar-ho en altres màquines o restaurar-ho si cal._
+## 1) Que es aquest setup
 
----
+Aquest repo no desplega OpenClaw per si sol.
 
-## 1. Entorn i infraestructura
+Es un repositori de suport per:
+- documentacio del laboratori
+- bones practiques de seguretat en Git
+- base per afegir skills/workflows en futures iteracions
 
-### Hardware / Hosting
+## 2) Prerequisits locals
 
-- **On corre**: [Per definir: VPS, màquina local, Docker...]
-- **Sistema operatiu**: [Per definir: Ubuntu 24.04, macOS, etc.]
-- **Memòria / CPU**: [Per definir]
+- `git`
+- `rg` (recomanat per revisions rapides)
+- shell tipus `zsh` o `bash`
 
-### Xarxa i accessos
-
-- **Ports oberts**: [Per definir: 3000, 8080...]
-- **Domini / IP**: [Per definir]
-- **SSL / Certificats**: [Per definir]
-
----
-
-## 2. Instal·lació d'OpenClaw
-
-### Prerequisites
+## 3) Instal.lacio local
 
 ```bash
-# Node.js (v20+)
-# Docker (opcional)
-# Git
+git clone https://github.com/raulvico1975/openclaw-raul-lab.git
+cd openclaw-raul-lab
+./scripts/install-precommit.sh
 ```
 
-### Passos d'instal·lació
+Comprovacio:
 
 ```bash
-# Clonar el repo oficial
-git clone https://github.com/openclaw/openclaw.git
-cd openclaw
-
-# Instal·lar dependències
-npm install
-
-# Configurar secrets
-cp .env.example .env
-# Editar .env amb les claus reals
-
-# Arrancar
-npm run dev
+git config --get core.hooksPath
 ```
 
----
+Esperat: `.githooks`
 
-## 3. Configuració personalitzada
+## 4) Que protegeix el pre-commit
 
-### Fitxers de configuració
+Hook: `.githooks/pre-commit`
 
-- **`~/.openclaw/openclaw.json`**: Configuració principal (workspace, skills, etc.)
-- **`~/.openclaw/secrets`**: Secrets (API keys, tokens, etc.)
-- **`~/.openclaw/workspace/`**: Workspace personalitzat (aquest repo!)
+Bloqueja patrons comuns de secrets en el `git diff --cached`:
+- AWS keys (`AKIA...`)
+- tokens tipus GitHub/Slack
+- claus privades PEM
+- URIs amb credencials embegudes
 
-### Exemple de `openclaw.json`
+## 5) Flux de treball recomanat
 
-```json
-{
-  "workspace": "~/.openclaw/workspace",
-  "skills": [
-    "ong-admin",
-    "project-mgmt",
-    "aeat-tools"
-  ],
-  "integrations": {
-    "firebase": true,
-    "google-drive": true
-  }
-}
-```
+1. Editar docs/fitxers.
+2. Revisar canvis: `git diff`.
+3. Afegir selectivament: `git add <fitxer>`.
+4. Revisar staged: `git diff --cached`.
+5. Commit.
 
----
+## 6) Relacio amb l'entorn productiu
 
-## 4. Skills personalitzats
+La documentacio operativa de produccio d'aquest projecte viu fora d'aquest repo, al directori:
+- `/Users/raulvico/Documents/clawbot-auto/`
 
-### On viuen els skills
+Fitxers de referencia:
+- `/Users/raulvico/Documents/clawbot-auto/DOCUMENTACIO_INFRA_ARQUITECTURA_ACTUAL.md`
+- `/Users/raulvico/Documents/clawbot-auto/RUNBOOK_ACCESS_SERVIDOR.md`
 
-- **Skills oficials**: ClawHub Marketplace
-- **Skills propis**: `~/.openclaw/workspace/skills/`
+## 7) Scope actual
 
-### Com afegir un skill propi
+Encara no hi ha:
+- skills funcionals a `skills/*`
+- workflows definits a `workflows/*`
 
-```bash
-cd ~/.openclaw/workspace/skills
-mkdir nou-skill
-cd nou-skill
-npm init -y
-# Crear skill segons la doc oficial
-```
-
----
-
-## 5. Integracions
-
-### Firebase
-
-- **Project ID**: [Per definir]
-- **Service Account**: `~/.openclaw/secrets/firebase-service-account.json`
-
-### Google Drive
-
-- **OAuth credentials**: `~/.openclaw/secrets/google-oauth.json`
-
-### AEAT (Agència Tributària)
-
-- **Certificat digital**: [Per definir]
-- **Configuració**: [Per definir]
-
----
-
-## 6. Backup i restauració
-
-### Què cal fer backup
-
-- `~/.openclaw/openclaw.json`
-- `~/.openclaw/secrets/` (MOLT IMPORTANT: mai pujar a GitHub!)
-- `~/.openclaw/workspace/` (aquest repo)
-
-### Com restaurar
-
-```bash
-# Clonar aquest repo
-git clone https://github.com/raulvico1975/openclaw-raul-lab.git ~/.openclaw/workspace
-
-# Restaurar secrets des de backup local
-cp -r /backup/openclaw/secrets ~/.openclaw/
-
-# Restaurar configuració
-cp /backup/openclaw/openclaw.json ~/.openclaw/
-
-# Reinstal·lar OpenClaw i arrencar
-cd ~/openclaw
-npm install
-npm run dev
-```
-
----
-
-## 7. Monitoratge i logs
-
-### On trobar els logs
-
-- **Logs d'OpenClaw**: `~/.openclaw/logs/`
-- **Logs del sistema**: `/var/log/`
-
-### Com monitorar
-
-```bash
-# Veure logs en temps real
-tail -f ~/.openclaw/logs/openclaw.log
-
-# Cercar errors
-grep ERROR ~/.openclaw/logs/openclaw.log
-```
-
----
-
-## 8. Troubleshooting
-
-### Problema: OpenClaw no arrenca
-
-- Comprovar que Node.js és v20+
-- Comprovar que `.env` té totes les variables
-- Comprovar logs: `~/.openclaw/logs/openclaw.log`
-
-### Problema: Skills no carreguen
-
-- Comprovar que estan a `~/.openclaw/workspace/skills/`
-- Comprovar que `openclaw.json` els té llistats
-- Reinstal·lar dependències: `npm install` dins del skill
-
----
-
-## 9. Recursos
-
-- [OpenClaw Docs - Setup](https://docs.openclaw.ai/setup)
-- [OpenClaw GitHub](https://github.com/openclaw/openclaw)
-- [ClawHub Marketplace](https://clawhub.io/)
-
----
-
-_Última actualització: 2026-02-19_
+Quan s'afegeixin, actualitza `skills/README.md` i `workflows/README.md` al mateix commit.
